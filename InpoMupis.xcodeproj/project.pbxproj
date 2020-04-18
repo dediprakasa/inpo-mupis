@@ -12,6 +12,9 @@
 		4B41A1E12449F519002DF581 /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B41A1E02449F519002DF581 /* UIHelper.swift */; };
 		4B41A1E32449F8F2002DF581 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B41A1E22449F8F2002DF581 /* MovieCell.swift */; };
 		4B51BECE2448789A009BC683 /* FavoritesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B51BECD2448789A009BC683 /* FavoritesVC.swift */; };
+		4B65B56C244B805500566108 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B65B56B244B805500566108 /* NetworkManager.swift */; };
+		4B65B56F244B83FF00566108 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B65B56E244B83FF00566108 /* Movie.swift */; };
+		4B65B571244B853800566108 /* IMError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B65B570244B853800566108 /* IMError.swift */; };
 		4B70A4FB2447728800446B7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B70A4FA2447728800446B7E /* AppDelegate.swift */; };
 		4B70A4FD2447728800446B7E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B70A4FC2447728800446B7E /* SceneDelegate.swift */; };
 		4B70A4FF2447728800446B7E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B70A4FE2447728800446B7E /* ViewController.swift */; };
@@ -25,6 +28,9 @@
 		4B41A1E02449F519002DF581 /* UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
 		4B41A1E22449F8F2002DF581 /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 		4B51BECD2448789A009BC683 /* FavoritesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesVC.swift; sourceTree = "<group>"; };
+		4B65B56B244B805500566108 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		4B65B56E244B83FF00566108 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		4B65B570244B853800566108 /* IMError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMError.swift; sourceTree = "<group>"; };
 		4B70A4F72447728800446B7E /* InpoMupis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InpoMupis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B70A4FA2447728800446B7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4B70A4FC2447728800446B7E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -68,8 +74,25 @@
 			isa = PBXGroup;
 			children = (
 				4B41A1E02449F519002DF581 /* UIHelper.swift */,
+				4B65B570244B853800566108 /* IMError.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		4B65B56A244B804000566108 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				4B65B56B244B805500566108 /* NetworkManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		4B65B56D244B83E900566108 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4B65B56E244B83FF00566108 /* Movie.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		4B70A4EE2447728800446B7E = {
@@ -91,6 +114,8 @@
 		4B70A4F92447728800446B7E /* InpoMupis */ = {
 			isa = PBXGroup;
 			children = (
+				4B65B56D244B83E900566108 /* Models */,
+				4B65B56A244B804000566108 /* Managers */,
 				4B41A1DF2449F4FF002DF581 /* Utilities */,
 				4B41A1D92449CA71002DF581 /* Controllers */,
 				4B70A4FA2447728800446B7E /* AppDelegate.swift */,
@@ -173,9 +198,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B65B56C244B805500566108 /* NetworkManager.swift in Sources */,
+				4B65B571244B853800566108 /* IMError.swift in Sources */,
 				4B51BECE2448789A009BC683 /* FavoritesVC.swift in Sources */,
 				4B70A4FF2447728800446B7E /* ViewController.swift in Sources */,
 				4B41A1E32449F8F2002DF581 /* MovieCell.swift in Sources */,
+				4B65B56F244B83FF00566108 /* Movie.swift in Sources */,
 				4B70A4FB2447728800446B7E /* AppDelegate.swift in Sources */,
 				4B70A4FD2447728800446B7E /* SceneDelegate.swift in Sources */,
 				4B41A1DB2449E54B002DF581 /* HomeController.swift in Sources */,

@@ -16,6 +16,16 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         super.viewDidLoad()
 
         collectionView.backgroundColor = .white
+        NetworkManager.shared.getPopularMovies { result in
+            switch result {
+            case .success(let movies):
+                print(movies)
+                break
+            case .failure(let error):
+                print(error)
+                break
+            }
+        }
 
         // Register cell classes
         self.collectionView!.register(CategoryCell.self, forCellWithReuseIdentifier: reuseIdentifier)
@@ -41,7 +51,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 6
+        return 4
     }
 
 
