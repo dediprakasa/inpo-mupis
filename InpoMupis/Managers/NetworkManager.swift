@@ -27,27 +27,28 @@ class NetworkManager {
     
     private init() {}
     
-    func getPopularMovies(completion: @escaping (Result<FetchResult, IMError>) -> Void) {
+    func getPopularMovies(completion: @escaping (Result<FetchResult, Error>) -> Void) {
         let endpoint = baseURL + "/\(movieCluster)?api_key=\(apiKey)"
         
         guard let url = URL(string: endpoint) else {
-            completion(.failure(.errorMsg))
+            completion(.failure(IMError.errorMsg))
             return
         }
         
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if let _ = error {
-                completion(.failure(.errorMsg))
+            if let error = error {
+                print(error.localizedDescription, "{{{{{{{{{{{{{{{")
+                completion(.failure(IMError.errorMsg))
                 return
             }
             
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                completion(.failure(.errorMsg))
+                completion(.failure(IMError.errorMsg))
                 return
             }
             
             guard let data = data else {
-                completion(.failure(.errorMsg))
+                completion(.failure(IMError.errorMsg))
                 return
             }
             
@@ -58,7 +59,7 @@ class NetworkManager {
                 completion(.success(movies))
             } catch {
                 print("-----")
-                completion(.failure(.errorMsg))
+                completion(.failure(IMError.errorMsg))
             }
         }
         

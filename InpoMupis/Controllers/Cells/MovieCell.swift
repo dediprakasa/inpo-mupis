@@ -25,6 +25,7 @@ class MovieCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "Ada Apa dengan Cinta? 2"
         label.font = .systemFont(ofSize: 12)
+        label.textColor = .label
         label.numberOfLines = 2
         
         return label  
@@ -45,7 +46,7 @@ class MovieCell: UICollectionViewCell {
         addSubview(imageView)
         addSubview(nameLabel)
         
-        imageView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.width * 1.3)
+        imageView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.width * 1.48)
         nameLabel.frame = CGRect(x: 0, y: imageView.frame.height, width: frame.width, height: 40)
         
     }

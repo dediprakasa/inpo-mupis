@@ -20,6 +20,8 @@
 		4B70A4FF2447728800446B7E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B70A4FE2447728800446B7E /* ViewController.swift */; };
 		4B70A5042447728D00446B7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B70A5032447728D00446B7E /* Assets.xcassets */; };
 		4B70A5072447728D00446B7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B70A5052447728D00446B7E /* LaunchScreen.storyboard */; };
+		4BA4DBDB244CC4B100A52910 /* FavoritesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4DBDA244CC4B100A52910 /* FavoritesController.swift */; };
+		4BA4DBDE244CC55A00A52910 /* IMTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4DBDD244CC55A00A52910 /* IMTitleLabel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		4B70A5032447728D00446B7E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4B70A5062447728D00446B7E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4B70A5082447728D00446B7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4BA4DBDA244CC4B100A52910 /* FavoritesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesController.swift; sourceTree = "<group>"; };
+		4BA4DBDD244CC55A00A52910 /* IMTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMTitleLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,8 +58,9 @@
 		4B41A1D92449CA71002DF581 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				4B51BECD2448789A009BC683 /* FavoritesVC.swift */,
 				4B41A1DA2449E54B002DF581 /* HomeController.swift */,
+				4BA4DBDA244CC4B100A52910 /* FavoritesController.swift */,
+				4B51BECD2448789A009BC683 /* FavoritesVC.swift */,
 				4B41A1DC2449EAF2002DF581 /* Cells */,
 			);
 			path = Controllers;
@@ -114,6 +119,7 @@
 		4B70A4F92447728800446B7E /* InpoMupis */ = {
 			isa = PBXGroup;
 			children = (
+				4BA4DBDC244CC53A00A52910 /* Views */,
 				4B65B56D244B83E900566108 /* Models */,
 				4B65B56A244B804000566108 /* Managers */,
 				4B41A1DF2449F4FF002DF581 /* Utilities */,
@@ -126,6 +132,14 @@
 				4B70A5082447728D00446B7E /* Info.plist */,
 			);
 			path = InpoMupis;
+			sourceTree = "<group>";
+		};
+		4BA4DBDC244CC53A00A52910 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4BA4DBDD244CC55A00A52910 /* IMTitleLabel.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -206,9 +220,11 @@
 				4B65B56F244B83FF00566108 /* Movie.swift in Sources */,
 				4B70A4FB2447728800446B7E /* AppDelegate.swift in Sources */,
 				4B70A4FD2447728800446B7E /* SceneDelegate.swift in Sources */,
+				4BA4DBDE244CC55A00A52910 /* IMTitleLabel.swift in Sources */,
 				4B41A1DB2449E54B002DF581 /* HomeController.swift in Sources */,
 				4B41A1DE2449EB2A002DF581 /* CategoryCell.swift in Sources */,
 				4B41A1E12449F519002DF581 /* UIHelper.swift in Sources */,
+				4BA4DBDB244CC4B100A52910 /* FavoritesController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

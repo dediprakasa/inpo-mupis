@@ -14,15 +14,20 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        collectionView.backgroundColor = .white
+        print("XXXXXX")
+        collectionView.backgroundColor = .systemBackground
         NetworkManager.shared.getPopularMovies { result in
+            print("+++++++++++++=")
             switch result {
             case .success(let movies):
                 print(movies)
                 break
             case .failure(let error):
-                print(error)
+                if error is IMError {
+                    let errorMsg = error as! IMError
+                    print(errorMsg.rawValue)
+                }
+                print(error, "------")
                 break
             }
         }
