@@ -11,23 +11,29 @@ import UIKit
 private let reuseIdentifier = "Cell"
 
 class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+    
+    var popularMovies: MovieCategory = {
+        let mc = MovieCategory(title: "Popular")
+        return mc
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("XXXXXX")
         collectionView.backgroundColor = .systemBackground
         NetworkManager.shared.getPopularMovies { result in
-            print("+++++++++++++=")
             switch result {
             case .success(let movies):
-                print(movies)
+//                print(movies.results)
+                DispatchQueue.main.async {
+                    self.popularMovies.setMovies(movies: movies.results)
+                    self.collectionView.reloadData()
+                }
                 break
             case .failure(let error):
                 if error is IMError {
                     let errorMsg = error as! IMError
                     print(errorMsg.rawValue)
                 }
-                print(error, "------")
                 break
             }
         }
@@ -39,36 +45,30 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 200)
+        return CGSize(width: collectionView.frame.width, height: 250)
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    // MARK: UICollectionViewDataSource
+    
+    // MARK: - UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 4
+        return 2
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
         return 1
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! CategoryCell
-    
-        // Configure the cell
+
+        switch indexPath[0] {
+        case 0:
+            cell.setMovies(movies: popularMovies.movies)
+        default:
+            cell.setMovies(movies: [])
+        }
     
         return cell
     }

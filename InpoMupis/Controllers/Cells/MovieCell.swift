@@ -10,16 +10,7 @@ import UIKit
 
 class MovieCell: UICollectionViewCell {
     
-    let imageView: UIImageView = {
-        let iv = UIImageView()
-        
-        iv.image = UIImage(named: "aadc2")
-        iv.contentMode = .scaleAspectFill
-        iv.layer.cornerRadius = 10
-        iv.layer.masksToBounds = true
-        
-        return iv
-    }()
+    let movieImageView = IMMoviePosterImageView(frame: .zero)
     
     let nameLabel: UILabel = {
         let label = UILabel()
@@ -40,15 +31,24 @@ class MovieCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureViews() {
+    private func configureViews() {
         backgroundColor = .clear
         
-        addSubview(imageView)
+        addSubview(movieImageView)
         addSubview(nameLabel)
         
-        imageView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.width * 1.48)
-        nameLabel.frame = CGRect(x: 0, y: imageView.frame.height, width: frame.width, height: 40)
+        movieImageView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.width * 1.48)
+        nameLabel.frame = CGRect(x: 0, y: movieImageView.frame.height, width: frame.width, height: 40)
         
+    }
+    
+    func set(movie: Movie!) {
+        guard let posterPath = movie.posterPath else {
+            print("LOHHHHH")
+            return
+        }
+        print("YESSSS")
+        movieImageView.downloadImage(from: posterPath)
     }
     
     

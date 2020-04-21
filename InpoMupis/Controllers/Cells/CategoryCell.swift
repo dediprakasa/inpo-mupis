@@ -11,6 +11,7 @@ import UIKit
 class CategoryCell: UICollectionViewCell {
     
     private let reuseID = "movieCell"
+    var movies: [Movie]?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,9 +35,25 @@ class CategoryCell: UICollectionViewCell {
         
     }()
     
+    let categoryLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Popular"
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.textColor = .label
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    
+    func setMovies(movies: [Movie]) {
+        self.movies = movies
+        movieCollectionView.reloadData()
+    }
+    
     func configureViews() {
         backgroundColor = .clear
         
+        addSubview(categoryLabel)
         addSubview(movieCollectionView)
         
         movieCollectionView.dataSource = self
@@ -44,10 +61,16 @@ class CategoryCell: UICollectionViewCell {
         movieCollectionView.register(MovieCell.self, forCellWithReuseIdentifier: reuseID)
         
         NSLayoutConstraint.activate([
-            movieCollectionView.topAnchor.constraint(equalTo: self.topAnchor),
+            categoryLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+            categoryLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            categoryLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            categoryLabel.heightAnchor.constraint(equalToConstant: 20),
+            movieCollectionView.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 10),
             movieCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
             movieCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
-            movieCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            movieCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            
+            
         ])
         
     }
@@ -60,11 +83,16 @@ class CategoryCell: UICollectionViewCell {
 
 extension CategoryCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        guard let movies = self.movies else {
+            return 0
+        }
+        return movies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseID, for: indexPath) as! MovieCell
+        print(indexPath.item, "---------------")
+        cell.set(movie: movies?[indexPath.item])
         
         return cell
     }
