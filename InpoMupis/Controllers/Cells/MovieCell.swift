@@ -44,10 +44,8 @@ class MovieCell: UICollectionViewCell {
     
     func set(movie: Movie!) {
         guard let posterPath = movie.posterPath else {
-            print("LOHHHHH")
             return
         }
-        print("YESSSS")
         movieImageView.downloadImage(from: posterPath)
     }
     

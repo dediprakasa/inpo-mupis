@@ -91,7 +91,6 @@ extension CategoryCell: UICollectionViewDelegate, UICollectionViewDataSource, UI
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseID, for: indexPath) as! MovieCell
-        print(indexPath.item, "---------------")
         cell.set(movie: movies?[indexPath.item])
         
         return cell

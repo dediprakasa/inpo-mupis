@@ -35,27 +35,22 @@ class IMMoviePosterImageView: UIImageView {
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             
             guard error == nil else {
-                print("------------------X")
                 return
             }
             
             guard (response as? HTTPURLResponse) != nil else {
-                print("------------------Y")
                 return
             }
             
             guard let data = data else {
-                print("------------------Z")
                 return
             }
             
             guard let image = UIImage(data: data) else {
-                print("------------------A")
                 return
             }
             
             DispatchQueue.main.sync {
-                print(image)
                 self.image = image
             }
         }
