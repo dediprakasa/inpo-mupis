@@ -11,16 +11,15 @@ import UIKit
 class MovieCell: UICollectionViewCell {
     
     let movieImageView = IMMoviePosterImageView(frame: .zero)
-    
-    let nameLabel: UILabel = {
+    var movieLabel: UILabel = {
         let label = UILabel()
-        label.text = "Ada Apa dengan Cinta? 2"
         label.font = .systemFont(ofSize: 12)
         label.textColor = .label
         label.numberOfLines = 2
         
-        return label  
+        return label
     }()
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,17 +31,19 @@ class MovieCell: UICollectionViewCell {
     }
     
     private func configureViews() {
+        
         backgroundColor = .clear
         
         addSubview(movieImageView)
-        addSubview(nameLabel)
+        addSubview(movieLabel)
         
         movieImageView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.width * 1.48)
-        nameLabel.frame = CGRect(x: 0, y: movieImageView.frame.height, width: frame.width, height: 40)
+        movieLabel.frame = CGRect(x: 0, y: movieImageView.frame.height, width: frame.width, height: 40)
         
     }
     
     func set(movie: Movie!) {
+        movieLabel.text = movie.originalTitle
         guard let posterPath = movie.posterPath else {
             return
         }

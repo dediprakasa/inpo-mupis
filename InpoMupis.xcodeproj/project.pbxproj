@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B11368B2451DE6800EB38C8 /* IMMovieBackdropImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B11368A2451DE6800EB38C8 /* IMMovieBackdropImageView.swift */; };
 		4B41A1DB2449E54B002DF581 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B41A1DA2449E54B002DF581 /* HomeController.swift */; };
 		4B41A1DE2449EB2A002DF581 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B41A1DD2449EB2A002DF581 /* CategoryCell.swift */; };
 		4B41A1E12449F519002DF581 /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B41A1E02449F519002DF581 /* UIHelper.swift */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4B11368A2451DE6800EB38C8 /* IMMovieBackdropImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMMovieBackdropImageView.swift; sourceTree = "<group>"; };
 		4B41A1DA2449E54B002DF581 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		4B41A1DD2449EB2A002DF581 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		4B41A1E02449F519002DF581 /* UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 			children = (
 				4BA4DBDD244CC55A00A52910 /* IMTitleLabel.swift */,
 				4BDF66DA244EFFAC00176F0E /* IMMoviePosterImageView.swift */,
+				4B11368A2451DE6800EB38C8 /* IMMovieBackdropImageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 				4B65B56C244B805500566108 /* NetworkManager.swift in Sources */,
 				4B65B571244B853800566108 /* IMError.swift in Sources */,
 				4B51BECE2448789A009BC683 /* FavoritesVC.swift in Sources */,
+				4B11368B2451DE6800EB38C8 /* IMMovieBackdropImageView.swift in Sources */,
 				4B70A4FF2447728800446B7E /* ViewController.swift in Sources */,
 				4B41A1E32449F8F2002DF581 /* MovieCell.swift in Sources */,
 				4B65B56F244B83FF00566108 /* Movie.swift in Sources */,

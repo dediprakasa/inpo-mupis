@@ -12,6 +12,7 @@ class CategoryCell: UICollectionViewCell {
     
     private let reuseID = "movieCell"
     var movies: [Movie]?
+    weak var delegate: HomeControllerDelegate!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,9 +36,8 @@ class CategoryCell: UICollectionViewCell {
         
     }()
     
-    let categoryLabel: UILabel = {
+    var categoryLabel: UILabel = {
         let label = UILabel()
-        label.text = "Popular"
         label.font = UIFont.systemFont(ofSize: 18)
         label.textColor = .label
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -45,7 +45,8 @@ class CategoryCell: UICollectionViewCell {
         return label
     }()
     
-    func setMovies(movies: [Movie]) {
+    func setCategory(categoryTitle: String, movies: [Movie]) {
+        categoryLabel.text = categoryTitle
         self.movies = movies
         movieCollectionView.reloadData()
     }
@@ -98,6 +99,15 @@ extension CategoryCell: UICollectionViewDelegate, UICollectionViewDataSource, UI
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 100, height: collectionView.frame.height - 20)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        delegate.didRequestMovie(movie: movies?[indexPath.item])
+//        delegate.didTapMovieCell()
+        
+//        let navController = UINavigationController(rootViewController: movieInfoVC)
+        
     }
 }
 

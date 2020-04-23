@@ -9,72 +9,74 @@
 import UIKit
 
 class FavoritesVC: UIViewController {
+    
+    var movie: Movie!
+    let posterImageView = IMMoviePosterImageView(frame: .zero)
+    let backdropImageView = IMMovieBackdropImageView(frame: .zero)
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         configureUI()
+        setInfo()
+        
     }
     
-    let backdropImageView: UIImageView = {
-        let iv = UIImageView()
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.backgroundColor = .systemPink
-        iv.image = UIImage(named: "bd_aadc")
-        iv.contentMode = .scaleAspectFill
+    init(movie: Movie) {
+        super.init(nibName: nil, bundle: nil)
+        self.movie = movie
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setInfo() {
+        if let backdropUrlString = movie.backdropPath {
+            backdropImageView.downloadImage(from: backdropUrlString)
+        }
         
-        return iv
+        if let posterUrlString = movie.posterPath {
+            posterImageView.downloadImage(from: posterUrlString)
+        }
+        
+        titleLabel.text = movie.originalTitle
+        
+    }
+
+    
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "N/A"
+        label.textColor = .label
+        label.numberOfLines = 2
+        return label
     }()
     
-    let posterImageView: UIImageView = {
-        let iv = UIImageView()
-        iv.backgroundColor = .systemGreen
-        iv.image = UIImage(named: "aadc2")
-        iv.contentMode = .scaleAspectFill
-        iv.layer.cornerRadius = 10
-        iv.layer.masksToBounds = true
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        
-        return iv
+    let durationLabel: UILabel = {
+        let label = UILabel()
+        label.text = "100 minutes"
+        label.textColor = .secondaryLabel
+        return label
     }()
     
-    let movieInfoStackView: UIStackView = {
+    let languageLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Original Language"
+        label.textColor = .label
+        return label
+    }()
+    
+
+    lazy var movieInfoStackView: UIStackView! = {
         let sv = UIStackView()
         sv.axis = .vertical
         sv.spacing = 0
         sv.translatesAutoresizingMaskIntoConstraints = false
         sv.distribution = .fillEqually
         
-        let titleLabel = UILabel()
-        titleLabel.text = "Ada Apa dengan Cinta? 2"
-        titleLabel.textColor = .label
-        titleLabel.backgroundColor = .systemRed
-        titleLabel.numberOfLines = 2
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        let titleView = UIView()
-        titleView.addSubview(titleLabel)
-        titleView.backgroundColor = .systemGreen
-        titleView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            titleView.heightAnchor.constraint(equalToConstant: 25),
-            titleView.widthAnchor.constraint(equalToConstant: 100),
-            titleLabel.topAnchor.constraint(equalTo: titleView.topAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: titleView.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: titleView.trailingAnchor)
-        ])
-        
-        let durationLabel = UILabel()
-        durationLabel.text = "100 minutes"
-        durationLabel.backgroundColor = .systemBlue
-        durationLabel.textColor = .secondaryLabel
-        
-        let languageLabel = UILabel()
-        languageLabel.text = "Original Language"
-        languageLabel.backgroundColor = .systemGreen
-        languageLabel.textColor = .label
-        
-        sv.addArrangedSubview(titleView)
+        sv.addArrangedSubview(titleLabel)
         sv.addArrangedSubview(durationLabel)
         sv.addArrangedSubview(languageLabel)
         
@@ -93,7 +95,7 @@ class FavoritesVC: UIViewController {
             backdropImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             backdropImageView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.5),
             
-            posterImageView.topAnchor.constraint(equalTo: backdropImageView.bottomAnchor),
+            posterImageView.topAnchor.constraint(equalTo: backdropImageView.bottomAnchor, constant: -20),
             posterImageView.leadingAnchor.constraint(equalTo: backdropImageView.leadingAnchor, constant: 40),
             posterImageView.widthAnchor.constraint(equalToConstant: 150),
             posterImageView.heightAnchor.constraint(equalToConstant: 210),

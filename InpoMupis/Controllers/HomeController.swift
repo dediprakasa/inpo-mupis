@@ -10,10 +10,19 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
+protocol HomeControllerDelegate: class {
+    func didRequestMovie(movie: Movie?)
+}
+
 class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     var popularMovies: MovieCategory = {
         let mc = MovieCategory(title: "Popular")
+        return mc
+    }()
+    
+    var nowPlayingMovies: MovieCategory = {
+        let mc = MovieCategory(title: "Now Playing")
         return mc
     }()
 
@@ -23,7 +32,6 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         NetworkManager.shared.getPopularMovies { result in
             switch result {
             case .success(let movies):
-//                print(movies.results)
                 DispatchQueue.main.async {
                     self.popularMovies.setMovies(movies: movies.results)
                     self.collectionView.reloadData()
@@ -37,11 +45,48 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
                 break
             }
         }
+        
+        NetworkManager.shared.getNowPlayingMovies { result in
+            switch result {
+            case .success(let movies):
+                DispatchQueue.main.async {
+                    self.nowPlayingMovies.setMovies(movies: movies.results)
+                    self.collectionView.reloadData()
+                }
+                break
+            case .failure(let error):
+                if error is IMError {
+                    let errorMsg = error as! IMError
+                    print(errorMsg.rawValue)
+                }
+                break
+            }
+        }
+        
 
         // Register cell classes
         self.collectionView!.register(CategoryCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
+    }
+    
+    func fetchMovies(withCategory category: String) {
+        NetworkManager.shared.getNowPlayingMovies { result in
+            switch result {
+            case .success(let movies):
+                DispatchQueue.main.async {
+                    self.nowPlayingMovies.setMovies(movies: movies.results)
+                    self.collectionView.reloadData()
+                }
+                break
+            case .failure(let error):
+                if error is IMError {
+                    let errorMsg = error as! IMError
+                    print(errorMsg.rawValue)
+                }
+                break
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -62,12 +107,15 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! CategoryCell
-
-        switch indexPath[0] {
+        
+        switch indexPath.section {
         case 0:
-            cell.setMovies(movies: popularMovies.movies)
+            cell.setCategory(categoryTitle: "Now Playing", movies: nowPlayingMovies.movies)
+            cell.delegate = self
+        case 1:
+            cell.setCategory(categoryTitle: "Popular", movies: popularMovies.movies)
         default:
-            cell.setMovies(movies: [])
+            cell.setCategory(categoryTitle: "NA", movies: [])
         }
     
         return cell
@@ -103,6 +151,16 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     }
     */
+}
 
+extension HomeController: HomeControllerDelegate {
+    func didRequestMovie(movie: Movie?) {        guard let movie = movie else {
+            return
+        }
+        let favVC = FavoritesVC(movie: movie)
+        navigationController?.pushViewController(favVC, animated: true)
+    }
+    
+    
 }
 
