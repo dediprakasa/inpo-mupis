@@ -12,4 +12,5 @@ struct Movie: Codable {
     var posterPath: String?
     let originalTitle: String
     var backdropPath: String?
+    var overview: String?
 }
