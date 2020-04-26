@@ -10,4 +10,7 @@ import Foundation
 
 enum IMError: String, Error {
     case errorMsg = "Something went wrong"
+    case unableToGetFavorites = "Something went wrong on retrieving favorites data"
+    case alreadyInFavorites = "You have favorited this movie"
+    case unableToFavorite = "Something went wrong. Unable to favorite this movie"
 }

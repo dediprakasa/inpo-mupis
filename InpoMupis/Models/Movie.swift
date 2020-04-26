@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct Movie: Codable {
+struct Movie: Codable, Hashable {
     var posterPath: String?
     let originalTitle: String
     var backdropPath: String?

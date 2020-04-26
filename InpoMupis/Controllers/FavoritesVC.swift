@@ -119,7 +119,6 @@ class FavoritesVC: UIViewController {
     lazy var overviewContainerView: UIView = {
         let view = UIView()
         let ovLabel = self.overviewLabel
-        print(ovLabel.frame.height)
         view.addSubview(ovLabel)
         view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -178,13 +177,20 @@ class FavoritesVC: UIViewController {
             
         ])
         
-        print(scrollView.frame.size, "+++")
-        print(scrollView.contentSize, "---")
-        
     }
     
+    
     @objc func addButtonTapped() {
-        print("----")
+        PersistenceManager.updateWith(favorite: movie, actionType: .add) { error in
+                
+            guard let error = error else {
+                print("Added to userDefaults")
+                IMAlert.showAlert(on: self, title: "Success", message: "Successfully added")
+                return
+            }
+            
+            IMAlert.showAlert(on: self, title: "Oops..", message: error.rawValue)
+        }
     }
 
 

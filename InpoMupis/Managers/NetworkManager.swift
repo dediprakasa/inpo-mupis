@@ -35,7 +35,6 @@ class NetworkManager {
         
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
-                print(error.localizedDescription, "{{{{{{{{{{{{{{{")
                 completion(.failure(IMError.errorMsg))
                 return
             }
@@ -56,7 +55,6 @@ class NetworkManager {
                 let movies = try decoder.decode(FetchResult.self, from: data)
                 completion(.success(movies))
             } catch {
-                print("-----")
                 completion(.failure(IMError.errorMsg))
             }
         }
@@ -74,13 +72,11 @@ class NetworkManager {
         
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
-                print(error.localizedDescription, "{{{{{{{{{{{{{{{")
                 completion(.failure(IMError.errorMsg))
                 return
             }
 
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                print("-------")
                 completion(.failure(IMError.errorMsg))
                 return
             }
