@@ -25,8 +25,11 @@
 		4B70A5072447728D00446B7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B70A5052447728D00446B7E /* LaunchScreen.storyboard */; };
 		4BA4DBDB244CC4B100A52910 /* FavoritesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4DBDA244CC4B100A52910 /* FavoritesController.swift */; };
 		4BA4DBDE244CC55A00A52910 /* IMTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4DBDD244CC55A00A52910 /* IMTitleLabel.swift */; };
+		4BCA10182455F90C004D6034 /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCA10172455F90C004D6034 /* FavoriteCell.swift */; };
 		4BDF66D7244ECAB300176F0E /* MovieCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDF66D6244ECAB300176F0E /* MovieCategory.swift */; };
 		4BDF66DB244EFFAC00176F0E /* IMMoviePosterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDF66DA244EFFAC00176F0E /* IMMoviePosterImageView.swift */; };
+		4BECED7D245721330084AC2C /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BECED7C245721330084AC2C /* UIViewController+Extensions.swift */; };
+		4BECED7F245722160084AC2C /* IMEmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BECED7E245722160084AC2C /* IMEmptyStateView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,8 +53,11 @@
 		4B70A5082447728D00446B7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4BA4DBDA244CC4B100A52910 /* FavoritesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesController.swift; sourceTree = "<group>"; };
 		4BA4DBDD244CC55A00A52910 /* IMTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMTitleLabel.swift; sourceTree = "<group>"; };
+		4BCA10172455F90C004D6034 /* FavoriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCell.swift; sourceTree = "<group>"; };
 		4BDF66D6244ECAB300176F0E /* MovieCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCategory.swift; sourceTree = "<group>"; };
 		4BDF66DA244EFFAC00176F0E /* IMMoviePosterImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMMoviePosterImageView.swift; sourceTree = "<group>"; };
+		4BECED7C245721330084AC2C /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
+		4BECED7E245722160084AC2C /* IMEmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMEmptyStateView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +87,7 @@
 			children = (
 				4B41A1DD2449EB2A002DF581 /* CategoryCell.swift */,
 				4B41A1E22449F8F2002DF581 /* MovieCell.swift */,
+				4BCA10172455F90C004D6034 /* FavoriteCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -132,6 +139,7 @@
 		4B70A4F92447728800446B7E /* InpoMupis */ = {
 			isa = PBXGroup;
 			children = (
+				4BECED7B245721090084AC2C /* Extensions */,
 				4BA4DBDC244CC53A00A52910 /* Views */,
 				4B65B56D244B83E900566108 /* Models */,
 				4B65B56A244B804000566108 /* Managers */,
@@ -153,8 +161,17 @@
 				4BA4DBDD244CC55A00A52910 /* IMTitleLabel.swift */,
 				4BDF66DA244EFFAC00176F0E /* IMMoviePosterImageView.swift */,
 				4B11368A2451DE6800EB38C8 /* IMMovieBackdropImageView.swift */,
+				4BECED7E245722160084AC2C /* IMEmptyStateView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		4BECED7B245721090084AC2C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4BECED7C245721330084AC2C /* UIViewController+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -227,6 +244,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BECED7F245722160084AC2C /* IMEmptyStateView.swift in Sources */,
 				4B65B56C244B805500566108 /* NetworkManager.swift in Sources */,
 				4B65B571244B853800566108 /* IMError.swift in Sources */,
 				4B51BECE2448789A009BC683 /* FavoritesVC.swift in Sources */,
@@ -239,9 +257,11 @@
 				4B70A4FD2447728800446B7E /* SceneDelegate.swift in Sources */,
 				4B6393FD2455D9F30012FF22 /* IMAlert.swift in Sources */,
 				4BDF66D7244ECAB300176F0E /* MovieCategory.swift in Sources */,
+				4BECED7D245721330084AC2C /* UIViewController+Extensions.swift in Sources */,
 				4B6393F924558F3A0012FF22 /* PersistenceManager.swift in Sources */,
 				4BA4DBDE244CC55A00A52910 /* IMTitleLabel.swift in Sources */,
 				4B41A1DB2449E54B002DF581 /* HomeController.swift in Sources */,
+				4BCA10182455F90C004D6034 /* FavoriteCell.swift in Sources */,
 				4B41A1DE2449EB2A002DF581 /* CategoryCell.swift in Sources */,
 				4B41A1E12449F519002DF581 /* UIHelper.swift in Sources */,
 				4BA4DBDB244CC4B100A52910 /* FavoritesController.swift in Sources */,

@@ -138,7 +138,6 @@ class FavoritesVC: UIViewController {
         view.addSubview(scrollView)
         
         
-        
         let addButon = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
         
         navigationItem.rightBarButtonItem = addButon
