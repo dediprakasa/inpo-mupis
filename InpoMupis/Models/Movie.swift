@@ -13,4 +13,6 @@ struct Movie: Codable, Hashable {
     let originalTitle: String
     var backdropPath: String?
     var overview: String?
+    var voteAverage: Float?
+    var originalLanguage: String?
 }

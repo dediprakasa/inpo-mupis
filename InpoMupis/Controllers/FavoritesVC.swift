@@ -62,17 +62,25 @@ class FavoritesVC: UIViewController {
         return label
     }()
     
-    let durationLabel: UILabel = {
+    lazy var languageLabel: UILabel = {
         let label = UILabel()
-        label.text = "100 minutes"
+        label.text = "Language: \(movie.originalLanguage!)"
         label.textColor = .secondaryLabel
         return label
     }()
     
-    let languageLabel: UILabel = {
+    let voteLabel: UILabel = {
         let label = UILabel()
-        label.text = "Original Language"
+        label.text = "Vote Average"
         label.textColor = .label
+        return label
+    }()
+    
+    lazy var voteValueLabel: UILabel = {
+        let label = UILabel()
+        label.text = String(movie.voteAverage!)
+        label.textColor = .secondaryLabel
+        label.font = UIFont.systemFont(ofSize: 16)
         return label
     }()
     
@@ -86,13 +94,14 @@ class FavoritesVC: UIViewController {
         
         
         sv.addArrangedSubview(titleLabel)
-        sv.addArrangedSubview(durationLabel)
         sv.addArrangedSubview(languageLabel)
+        sv.addArrangedSubview(voteLabel)
+        sv.addArrangedSubview(voteValueLabel)
         
         return sv
     }()
     
-    let overviewLabelText = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+    lazy var overviewLabelText = movie.overview
     
     lazy var overviewLabel: UILabel = {
         let label = UILabel()

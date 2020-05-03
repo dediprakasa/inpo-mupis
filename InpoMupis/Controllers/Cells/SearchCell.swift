@@ -1,14 +1,16 @@
 //
-//  MovieCell.swift
+//  SearchCell.swift
 //  InpoMupis
 //
-//  Created by Dedi Prakasa on 4/17/20.
+//  Created by Dedi Prakasa on 5/1/20.
 //  Copyright © 2020 Dedi Prakasa. All rights reserved.
 //
 
 import UIKit
 
-class MovieCell: UICollectionViewCell {
+class SearchCell: UICollectionViewCell {
+    
+    static let reuseID = "SearchCell"
     
     let movieImageView = IMMoviePosterImageView(frame: .zero)
     var movieLabel: UILabel = {
@@ -17,7 +19,6 @@ class MovieCell: UICollectionViewCell {
         label.textColor = .label
         label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     
@@ -32,16 +33,13 @@ class MovieCell: UICollectionViewCell {
     }
     
     private func configureViews() {
-        
-        backgroundColor = .clear
+
         
         addSubview(movieImageView)
         addSubview(movieLabel)
         
-//        movieImageView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.width * 1.48)
-//        movieLabel.frame = CGRect(x: 0, y: movieImageView.frame.height, width: frame.width, height: 40)
-        
-        let padding: CGFloat = 5
+        let padding: CGFloat = 10
+//        movieImageView.frame = CGRect(x: padding/2, y: 0, width: frame.width - padding, height: (frame.width - padding) * 1.48)
         NSLayoutConstraint.activate([
             movieImageView.topAnchor.constraint(equalTo: self.topAnchor),
             movieImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding),
@@ -53,6 +51,7 @@ class MovieCell: UICollectionViewCell {
             movieLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding),
             movieLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
+//        movieLabel.frame = CGRect(x: 10, y: movieImageView.frame.height, width: frame.width, height: 40)
         
     }
     
@@ -63,6 +62,4 @@ class MovieCell: UICollectionViewCell {
         }
         movieImageView.downloadImage(from: posterPath)
     }
-    
-    
 }

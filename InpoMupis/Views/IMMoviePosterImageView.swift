@@ -17,7 +17,7 @@ class IMMoviePosterImageView: UIImageView {
         image = placeholderImage
         layer.cornerRadius = 10
         layer.masksToBounds = true
-        contentMode = .scaleAspectFill
+        contentMode = .scaleAspectFit
         translatesAutoresizingMaskIntoConstraints = false
     }
     
@@ -52,6 +52,7 @@ class IMMoviePosterImageView: UIImageView {
             
             DispatchQueue.main.sync {
                 self.image = image
+                self.contentMode = .scaleAspectFill
             }
         }
         

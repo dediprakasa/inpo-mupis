@@ -15,6 +15,13 @@ protocol HomeControllerDelegate: class {
 }
 
 class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+        
+    let searchResultVC: SearchResultVC = {
+        let vc = SearchResultVC()
+        vc.view.backgroundColor = .systemYellow
+
+        return vc
+    }()
     
     var popularMovies: MovieCategory = {
         let mc = MovieCategory(title: "Popular")
@@ -25,10 +32,56 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         let mc = MovieCategory(title: "Now Playing")
         return mc
     }()
+    
+    var upcomingMovies: MovieCategory = {
+        let mc = MovieCategory(title: "Upcoming")
+        return mc
+    }()
+    
+    let searchController = UISearchController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.backgroundColor = .systemBackground
+        configureSearchController()
+        fetchNowPlayingMovies()
+        fetchPopularMovies()
+        fetchUpcomingMovies()
+        
+
+        // Register cell classes
+        self.collectionView!.register(CategoryCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+    }
+    
+    func configureSearchController() {
+        searchController.searchBar.delegate = self
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search for a movie"
+        searchController.searchBar.endEditing(true)
+        navigationItem.searchController = searchController
+    }
+    
+    func fetchNowPlayingMovies() {
+        NetworkManager.shared.getNowPlayingMovies { result in
+            switch result {
+            case .success(let movies):
+                DispatchQueue.main.async {
+                    self.nowPlayingMovies.setMovies(movies: movies.results)
+                    self.collectionView.reloadData()
+                }
+                break
+            case .failure(let error):
+                if error is IMError {
+                    let errorMsg = error as! IMError
+                    print(errorMsg.rawValue)
+                }
+                break
+            }
+        }
+    }
+    
+    func fetchPopularMovies() {
         NetworkManager.shared.getPopularMovies { result in
             switch result {
             case .success(let movies):
@@ -45,37 +98,14 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
                 break
             }
         }
-        
-        NetworkManager.shared.getNowPlayingMovies { result in
-            switch result {
-            case .success(let movies):
-                DispatchQueue.main.async {
-                    self.nowPlayingMovies.setMovies(movies: movies.results)
-                    self.collectionView.reloadData()
-                }
-                break
-            case .failure(let error):
-                if error is IMError {
-                    let errorMsg = error as! IMError
-                    print(errorMsg.rawValue)
-                }
-                break
-            }
-        }
-        
-
-        // Register cell classes
-        self.collectionView!.register(CategoryCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
     }
     
-    func fetchMovies(withCategory category: String) {
-        NetworkManager.shared.getNowPlayingMovies { result in
+    func fetchUpcomingMovies() {
+        NetworkManager.shared.getUpcomingMovies { result in
             switch result {
             case .success(let movies):
                 DispatchQueue.main.async {
-                    self.nowPlayingMovies.setMovies(movies: movies.results)
+                    self.upcomingMovies.setMovies(movies: movies.results)
                     self.collectionView.reloadData()
                 }
                 break
@@ -97,9 +127,8 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     // MARK: - UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return 3
     }
-
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1
@@ -114,53 +143,71 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
             cell.delegate = self
         case 1:
             cell.setCategory(categoryTitle: "Popular", movies: popularMovies.movies)
+        case 2:
+            cell.setCategory(categoryTitle: "Upcoming", movies: upcomingMovies.movies)
         default:
             cell.setCategory(categoryTitle: "NA", movies: [])
         }
     
         return cell
     }
-
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
 }
 
 extension HomeController: HomeControllerDelegate {
-    func didRequestMovie(movie: Movie?) {        guard let movie = movie else {
+    func didRequestMovie(movie: Movie?) {
+        guard let movie = movie else {
             return
         }
         let favVC = FavoritesVC(movie: movie)
         navigationController?.pushViewController(favVC, animated: true)
     }
+}
+
+extension HomeController: UISearchBarDelegate, UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        
+    }
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchResultVC.delegate = self
+        addChild(searchResultVC)
+        view.addSubview(searchResultVC.view)
+        
+        NetworkManager.shared.searchMovie(for: searchBar.text ?? "") { result in
+            switch result {
+            case .success(let movies):
+                DispatchQueue.main.async {
+                    self.searchResultVC.movies = movies.results
+                    self.searchResultVC.collectionView.reloadData()
+                }
+                break
+            case .failure(let error):
+                if error is IMError {
+                    let errorMsg = error as! IMError
+                    print(errorMsg.rawValue)
+                }
+                break
+            }
+        }
+        
+        
+        
+        searchResultVC.view.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: view.frame.height - searchBar.frame.height)
+        
+        UIView.animate(withDuration: 0.3) {
+            self.searchResultVC.view.frame.origin.y = searchBar.frame.height
+        }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.searchResultVC.view.frame.origin.y = self.view.frame.height
+        }) { _ in
+            self.searchResultVC.removeFromParent()
+            self.searchResultVC.view.removeFromSuperview()
+        }
+        
+    }
     
 }
 
