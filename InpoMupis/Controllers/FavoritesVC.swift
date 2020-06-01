@@ -22,13 +22,32 @@ class FavoritesVC: UIViewController {
     var movie: Movie!
     let posterImageView = IMMoviePosterImageView(frame: .zero)
     let backdropImageView = IMMovieBackdropImageView(frame: .zero)
+    let recommendationCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        
+        layout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        
+        collectionView.backgroundColor = .clear
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return collectionView
+        
+    }()
+    var recommendationMovies: MovieCategory = {
+        let mc = MovieCategory(title: "Recommendations")
+        return mc
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         configureUI()
         setInfo()
-        
+        fetchRecommendations()
+        recommendationCollectionView.delegate = self
+        recommendationCollectionView.dataSource = self
+        recommendationCollectionView.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.reuseID)
     }
     
     init(movie: Movie) {
@@ -38,6 +57,25 @@ class FavoritesVC: UIViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func fetchRecommendations() {
+        NetworkManager.shared.getRecommendation(for: movie) { result in
+            switch result {
+            case .success(let movies):
+                DispatchQueue.main.async {
+                    self.recommendationMovies.setMovies(movies: movies.results)
+                    self.recommendationCollectionView.reloadData()
+                }
+                break
+            case .failure(let error):
+                if error is IMError {
+                    let errorMsg = error as! IMError
+                    print(errorMsg.rawValue)
+                }
+                break
+            }
+        }
     }
     
     func setInfo() {
@@ -155,6 +193,7 @@ class FavoritesVC: UIViewController {
         scrollView.addSubview(posterImageView)
         scrollView.addSubview(movieInfoStackView)
         scrollView.addSubview(overviewContainerView)
+        scrollView.addSubview(recommendationCollectionView)
         
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -180,7 +219,12 @@ class FavoritesVC: UIViewController {
             overviewContainerView.topAnchor.constraint(equalTo: posterImageView.bottomAnchor, constant: 20),
             overviewContainerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             overviewContainerView.trailingAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            overviewContainerView.heightAnchor.constraint(equalToConstant: getOverviewLabelHeight())
+            overviewContainerView.heightAnchor.constraint(equalToConstant: getOverviewLabelHeight()),
+            
+            recommendationCollectionView.topAnchor.constraint(equalTo: overviewContainerView.bottomAnchor, constant: 20),
+            recommendationCollectionView.leadingAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            recommendationCollectionView.trailingAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            recommendationCollectionView.heightAnchor.constraint(equalToConstant: 250)
             
             
         ])
@@ -192,14 +236,41 @@ class FavoritesVC: UIViewController {
         PersistenceManager.updateWith(favorite: movie, actionType: .add) { error in
                 
             guard let error = error else {
-                print("Added to userDefaults")
                 IMAlert.showAlert(on: self, title: "Success", message: "Successfully added")
                 return
             }
-            
+            print(error.localizedDescription)
             IMAlert.showAlert(on: self, title: "Oops..", message: error.rawValue)
         }
     }
 
 
+}
+
+extension FavoritesVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, HomeControllerDelegate {
+    func didRequestMovie(movie: Movie?) {
+        guard let movie = movie else {
+            return
+        }
+        let favVC = FavoritesVC(movie: movie)
+        navigationController?.pushViewController(favVC, animated: true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseID, for: indexPath) as! CategoryCell
+        cell.setCategory(categoryTitle: "Recommendations", movies: recommendationMovies.movies)
+        cell.delegate = self
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: 250)
+    }
+    
+    
+    
 }

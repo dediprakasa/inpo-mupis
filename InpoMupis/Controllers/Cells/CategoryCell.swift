@@ -10,7 +10,7 @@ import UIKit
 
 class CategoryCell: UICollectionViewCell {
     
-    private let reuseID = "movieCell"
+    static let reuseID = "movieCell"
     var movies: [Movie]?
     weak var delegate: HomeControllerDelegate!
     
@@ -59,7 +59,7 @@ class CategoryCell: UICollectionViewCell {
         
         movieCollectionView.dataSource = self
         movieCollectionView.delegate = self
-        movieCollectionView.register(MovieCell.self, forCellWithReuseIdentifier: reuseID)
+        movieCollectionView.register(MovieCell.self, forCellWithReuseIdentifier: MovieCell.reuseID)
         
         NSLayoutConstraint.activate([
             categoryLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
@@ -91,7 +91,7 @@ extension CategoryCell: UICollectionViewDelegate, UICollectionViewDataSource, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseID, for: indexPath) as! MovieCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCell.reuseID, for: indexPath) as! MovieCell
         cell.set(movie: movies?[indexPath.item])
         
         return cell

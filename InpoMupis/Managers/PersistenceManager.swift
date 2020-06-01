@@ -26,9 +26,10 @@ class PersistenceManager {
             case .success(let favorites):
                 var retrievedFavorites = favorites
                 
-                switch actionType {
+                switch actionType  {
                 case .add:
-                    guard !retrievedFavorites.contains(favorite) else {                        completion(.alreadyInFavorites)
+                    guard !retrievedFavorites.contains(favorite) else {
+                        completion(.alreadyInFavorites)
                         return
                     }
                     retrievedFavorites.append(favorite)
@@ -41,6 +42,7 @@ class PersistenceManager {
                 completion(error)
             }
         }
+        
         
     }
     

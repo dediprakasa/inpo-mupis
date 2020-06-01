@@ -140,7 +140,6 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         switch indexPath.section {
         case 0:
             cell.setCategory(categoryTitle: "Now Playing", movies: nowPlayingMovies.movies)
-            cell.delegate = self
         case 1:
             cell.setCategory(categoryTitle: "Popular", movies: popularMovies.movies)
         case 2:
@@ -148,7 +147,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         default:
             cell.setCategory(categoryTitle: "NA", movies: [])
         }
-    
+        cell.delegate = self
         return cell
     }
 }

@@ -9,6 +9,7 @@
 import UIKit
 
 struct Movie: Codable, Hashable {
+    let id: Int
     var posterPath: String?
     let originalTitle: String
     var backdropPath: String?

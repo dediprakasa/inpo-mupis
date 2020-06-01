@@ -188,4 +188,41 @@ class NetworkManager {
         task.resume()
     }
     
+    func getRecommendation(for movie: Movie ,completion: @escaping (Result<FetchResult, Error>) -> Void) {
+        let endpoint = baseURL + "/\(movie.id)/recommendations?api_key=\(apiKey)"
+        guard let url = URL(string: endpoint) else {
+            completion(.failure(IMError.errorMsg))
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let error = error {
+                completion(.failure(IMError.errorMsg))
+                return
+            }
+
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                completion(.failure(IMError.errorMsg))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(IMError.errorMsg))
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let movies = try decoder.decode(FetchResult.self, from: data)
+                completion(.success(movies))
+            } catch {
+                completion(.failure(IMError.errorMsg))
+            }
+        }
+        
+        task.resume()
+    }
+    
+    
 }

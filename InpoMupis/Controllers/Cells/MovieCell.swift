@@ -10,6 +10,7 @@ import UIKit
 
 class MovieCell: UICollectionViewCell {
     
+    static let reuseID = "movieCell"
     let movieImageView = IMMoviePosterImageView(frame: .zero)
     var movieLabel: UILabel = {
         let label = UILabel()
